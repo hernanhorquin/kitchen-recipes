@@ -11,14 +11,10 @@ import kotlinx.android.synthetic.main.item_recipe.view.recipe_name
 import kotlinx.android.synthetic.main.item_recipe.view.recipe_category
 import kotlinx.android.synthetic.main.item_recipe.view.recipe_image
 
-class RecipeAdapter(private var recipeList: List<Recipe>, val getId: (String) -> Unit) :
+class RecipeAdapter(val getId: (String) -> Unit) :
     RecyclerView.Adapter<RecipeViewHolder>() {
 
-    var recipeFilterList: List<Recipe> = listOf()
-
-    init {
-        recipeFilterList = recipeList
-    }
+    var recipeList = mutableListOf<Recipe>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder =
         RecipeViewHolder(
@@ -29,10 +25,16 @@ class RecipeAdapter(private var recipeList: List<Recipe>, val getId: (String) ->
             ), getId
         )
 
-    override fun getItemCount(): Int = recipeFilterList.size
+    override fun getItemCount(): Int = recipeList.size
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        holder.bind(recipeFilterList[position])
+        holder.bind(recipeList[position])
+    }
+
+    fun update(list: List<Recipe>) {
+        recipeList.clear()
+        recipeList.addAll(list)
+        notifyDataSetChanged()
     }
 }
 

@@ -12,3 +12,8 @@ data class Recipe(
     @SerializedName("strCategory")
     val category: String
 )
+
+data class Meal(
+    @SerializedName("meals")
+    val meals: List<Recipe>
+)
