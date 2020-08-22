@@ -23,4 +23,18 @@ class RecipesRepository {
         }
         return Result.Failure(Exception(BAD_REQUEST))
     }
+
+    fun getInstructions(recipeId: String): Result<Recipe> {
+        val callResponse = apiService.createService(ApiService::class.java)
+            .getInstructions(recipeId)
+        val response = callResponse.execute()
+        response?.let {
+            if (response.isSuccessful) {
+                response.body()?.let { meals ->
+                    return Result.Success(meals.meals.get(0))
+                }
+            }
+        }
+        return Result.Failure(Exception(BAD_REQUEST))
+    }
 }

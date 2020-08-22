@@ -1,10 +1,9 @@
 package com.example.kitchen_recipes.ui.activity
 
-import android.graphics.Color
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +20,9 @@ class KitchenRecipesActivity : AppCompatActivity() {
 
     private val viewModel = KitchenRecipeViewModel(RecipesRepository())
     private var adapter = RecipeAdapter() {
-
+        val intent = Intent(applicationContext, RecipeDetailActivity::class.java)
+        intent.putExtra("recipeId", it)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +56,7 @@ class KitchenRecipesActivity : AppCompatActivity() {
 
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+
                 return false
             }
 

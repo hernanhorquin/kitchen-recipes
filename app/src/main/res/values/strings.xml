@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Kitchen Recipes</string>
+    <string name="title_activity_recipe_detail">Recipe Details</string>
 </resources>

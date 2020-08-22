@@ -8,5 +8,8 @@ import retrofit2.Call
 interface ApiService {
 
     @GET("search.php")
-    fun getRecipes(@Query("s") recipeName: String): Call<Meal>?
+    fun getRecipes(@Query("s") recipeName: String): Call<Meal>
+
+    @GET("lookup.php")
+    fun getInstructions(@Query("i") recipeId: String): Call<Meal>
 }

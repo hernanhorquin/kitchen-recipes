@@ -40,7 +40,7 @@ class RecipeAdapter(val getId: (String) -> Unit) :
 
 class RecipeViewHolder(view: View, val getId: (String) -> Unit) : RecyclerView.ViewHolder(view) {
     fun bind(item: Recipe) = with(itemView) {
-        setOnClickListener {
+        itemView.setOnClickListener {
             getId(item.id)
         }
         recipe_name.text = item.name
