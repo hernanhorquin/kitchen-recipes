@@ -57,7 +57,6 @@ class KitchenRecipesActivity : AppCompatActivity() {
                         } else {
                             adapter.update(listOf())
                             kitchen_recipes_recycler.adapter = adapter
-                            Toast.makeText(this, getString(R.string.no_matchs_finded), Toast.LENGTH_SHORT).show()
                         }
                         hideLoading()
                     }
