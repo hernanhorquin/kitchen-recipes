@@ -56,6 +56,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_image" />
 
+        <TextView
+            android:id="@+id/recipe_ingredients_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/recipe_detail_name_margin_top"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:text="@string/ingredients_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_instruction" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/recycler_margin_top"
+            android:layout_marginBottom="@dimen/recycler_margin_bottom"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_ingredients_title"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

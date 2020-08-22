@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kitchen_recipes.R
 import com.example.kitchen_recipes.data.repository.RecipesRepository
 import com.example.kitchen_recipes.ui.adapter.RecipeAdapter
+import com.example.kitchen_recipes.ui.utils.Constants.RECIPE_ID
 import com.example.kitchen_recipes.ui.utils.Status
 import com.example.kitchen_recipes.ui.viewmodel.KitchenRecipeViewModel
 import kotlinx.android.synthetic.main.activity_kitchen_recipes.kitchen_recipes_recycler
@@ -21,7 +22,7 @@ class KitchenRecipesActivity : AppCompatActivity() {
     private val viewModel = KitchenRecipeViewModel(RecipesRepository())
     private var adapter = RecipeAdapter() {
         val intent = Intent(applicationContext, RecipeDetailActivity::class.java)
-        intent.putExtra("recipeId", it)
+        intent.putExtra(RECIPE_ID, it)
         startActivity(intent)
     }
 
@@ -32,7 +33,6 @@ class KitchenRecipesActivity : AppCompatActivity() {
         setUpObservers()
 
         kitchen_recipes_recycler.layoutManager = LinearLayoutManager(this)
-
     }
 
     private fun setUpObservers() {
