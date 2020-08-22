@@ -37,4 +37,18 @@ class RecipesRepository {
         }
         return Result.Failure(Exception(BAD_REQUEST))
     }
+
+    fun getRandomBanner(): Result<String> {
+        val callResponse = apiService.createService(ApiService::class.java)
+            .getRandomBanner()
+        val response = callResponse.execute()
+        response?.let {
+            if (response.isSuccessful) {
+                response.body()?.let { meals ->
+                    return Result.Success(meals.meals.get(0).photo)
+                }
+            }
+        }
+        return Result.Failure(Exception(BAD_REQUEST))
+    }
 }

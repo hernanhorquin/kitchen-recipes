@@ -4,15 +4,18 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.kitchen_recipes.R
 import com.example.kitchen_recipes.data.repository.RecipesRepository
 import com.example.kitchen_recipes.ui.adapter.RecipeAdapter
 import com.example.kitchen_recipes.ui.utils.Constants.RECIPE_ID
 import com.example.kitchen_recipes.ui.utils.Status
 import com.example.kitchen_recipes.ui.viewmodel.KitchenRecipeViewModel
+import kotlinx.android.synthetic.main.activity_kitchen_recipes.banner
 import kotlinx.android.synthetic.main.activity_kitchen_recipes.kitchen_recipes_recycler
 import kotlinx.android.synthetic.main.activity_kitchen_recipes.progressBar
 import kotlinx.android.synthetic.main.activity_kitchen_recipes.search_view
@@ -31,7 +34,7 @@ class KitchenRecipesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_kitchen_recipes)
 
         setUpObservers()
-
+        viewModel.getRandomBanner()
         kitchen_recipes_recycler.layoutManager = LinearLayoutManager(this)
     }
 
@@ -54,6 +57,25 @@ class KitchenRecipesActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.randomBanner.observe(this, Observer {
+            when (it.responseType) {
+                Status.SUCCESSFUL -> {
+                    it.data?.let { bannerPhoto ->
+                        Glide.with(this).load(bannerPhoto).into(banner)
+                    }
+                }
+                else -> {
+                    Toast.makeText(this, getString(R.string.load_banner_error_msg), Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+        viewModel.delayFinish.observe(this, Observer {
+            if (it) {
+                viewModel.getRandomBanner()
+                viewModel.resetDelay()
+            }
+        })
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
 

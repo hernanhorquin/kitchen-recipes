@@ -12,4 +12,7 @@ interface ApiService {
 
     @GET("lookup.php")
     fun getInstructions(@Query("i") recipeId: String): Call<Meal>
+
+    @GET("random.php")
+    fun getRandomBanner(): Call<Meal>
 }
