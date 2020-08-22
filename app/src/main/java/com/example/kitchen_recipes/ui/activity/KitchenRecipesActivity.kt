@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.kitchen_recipes.R
 import com.example.kitchen_recipes.data.repository.RecipesRepository
 import com.example.kitchen_recipes.ui.adapter.RecipeAdapter
+import com.example.kitchen_recipes.ui.utils.Constants.EMPTY_STRING
 import com.example.kitchen_recipes.ui.utils.Constants.RECIPE_ID
 import com.example.kitchen_recipes.ui.utils.Status
 import com.example.kitchen_recipes.ui.viewmodel.KitchenRecipeViewModel
@@ -34,6 +35,7 @@ class KitchenRecipesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_kitchen_recipes)
 
         setUpObservers()
+        viewModel.getRecipes(EMPTY_STRING)
         viewModel.getRandomBanner()
         kitchen_recipes_recycler.layoutManager = LinearLayoutManager(this)
     }
@@ -49,8 +51,14 @@ class KitchenRecipesActivity : AppCompatActivity() {
                 }
                 Status.SUCCESSFUL -> {
                     it.data?.let { recipeList ->
-                        adapter.update(recipeList)
-                        kitchen_recipes_recycler.adapter = adapter
+                        if (recipeList.isNotEmpty()) {
+                            adapter.update(recipeList)
+                            kitchen_recipes_recycler.adapter = adapter
+                        } else {
+                            adapter.update(listOf())
+                            kitchen_recipes_recycler.adapter = adapter
+                            Toast.makeText(this, getString(R.string.no_matchs_finded), Toast.LENGTH_SHORT).show()
+                        }
                         hideLoading()
                     }
                 }
@@ -83,7 +91,7 @@ class KitchenRecipesActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.getRecipes(newText ?: "")
+                viewModel.getRecipes(newText ?: EMPTY_STRING)
                 return false
             }
 

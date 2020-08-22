@@ -3,4 +3,5 @@
     <string name="title_activity_recipe_detail">Recipe Details</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="load_banner_error_msg">Cannot load banner</string>
+    <string name="no_matchs_finded">No recipies finded</string>
 </resources>

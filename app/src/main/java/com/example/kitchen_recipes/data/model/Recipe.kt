@@ -57,5 +57,5 @@ data class Recipe(
 
 data class Meal(
     @SerializedName("meals")
-    val meals: List<Recipe>
+    val meals: List<Recipe>?
 )

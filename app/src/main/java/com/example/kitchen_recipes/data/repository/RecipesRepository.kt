@@ -13,11 +13,14 @@ class RecipesRepository {
     fun getRecipes(recipeName: String): Result<List<Recipe>> {
         val callResponse = apiService.createService(ApiService::class.java)
             .getRecipes(recipeName)
-        val response = callResponse?.execute()
-        response?.let {
+        val response = callResponse.execute()
+        response?.let { _ ->
             if (response.isSuccessful) {
                 response.body()?.let { meals ->
-                    return Result.Success(meals.meals)
+                    meals.meals?.let {
+                        return Result.Success(it)
+                    }
+                    return Result.Success(listOf())
                 }
             }
         }
@@ -31,7 +34,9 @@ class RecipesRepository {
         response?.let {
             if (response.isSuccessful) {
                 response.body()?.let { meals ->
-                    return Result.Success(meals.meals.get(0))
+                    meals.meals?.let {
+                        return Result.Success(it.get(0))
+                    }
                 }
             }
         }
@@ -45,7 +50,9 @@ class RecipesRepository {
         response?.let {
             if (response.isSuccessful) {
                 response.body()?.let { meals ->
-                    return Result.Success(meals.meals.get(0).photo)
+                    meals.meals?.let {
+                        return Result.Success(it.get(0).photo)
+                    }
                 }
             }
         }
